@@ -8,6 +8,7 @@ import os.path as P
 from collections import deque
 from fnmatch import fnmatch
 import re
+import io
 
 PROC_DIR = '/proc'
 time_now = time.time
@@ -65,7 +66,7 @@ class ProcessByPID:
         self.status_path = P.join(path, 'status')
 
         # Get the command that started the process
-        with open(P.join(path, 'cmdline'), encoding='utf-8') as f:
+        with io.open(P.join(path, 'cmdline'), encoding='utf-8') as f:
             cmd = f.read()
             # args are separated by \x00 (Null byte)
             self.command = cmd.replace('\x00', ' ').strip()
