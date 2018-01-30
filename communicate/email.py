@@ -1,6 +1,7 @@
 
 import logging
 import smtplib
+import socket
 from email.mime.text import MIMEText
 
 
@@ -19,7 +20,7 @@ def send(to=None, process=None, subject_format='{executable} process {pid} ended
     msg = MIMEText(body)
     msg['Subject'] = subject_format.format(**process.__dict__)
     # From is required
-    msg['From'] = 'process.watcher@localhost'
+    msg['From'] = 'process.watcher@' + socket.gethostname()
     msg['To'] = ', '.join(to)
 
     # Send the message via our own SMTP server.
